@@ -18,8 +18,8 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("join-room", (room) => {
+  socket.on("join-room", (room, cb) => {
     socket.join(room);
-    console.log(`User with id ${socket.id} joined room ${room}`);
+    cb(`User with id ${socket.id} joined room ${room}`);
   });
 });
