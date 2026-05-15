@@ -1,4 +1,4 @@
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
 const joinRoomButton = document.getElementById("room-button");
 const messageInput = document.getElementById("message-input");
