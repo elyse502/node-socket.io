@@ -9,9 +9,10 @@ const socket = io("http://localhost:3000");
 // Listening to events coming down from the server
 socket.on("connect", () => {
   displayMessage(`You connected with id: ${socket.id}`);
+});
 
-  // Sending events up from the client to the server
-  socket.emit("custom-event", 10, "Hi", { name: "ElyseeDev", age: 20 });
+socket.on("receive-message", (message) => {
+  displayMessage(message);
 });
 
 form.addEventListener("submit", (e) => {
@@ -21,6 +22,8 @@ form.addEventListener("submit", (e) => {
 
   if (message === "") return;
   displayMessage(message);
+  // Emitting events going up to the server
+  socket.emit("send-message", message);
 
   messageInput.value = "";
 });

@@ -8,7 +8,10 @@ io.on("connection", (socket) => {
   console.log(socket.id);
 
   // Listening to events coming up from the client
-  socket.on("custom-event", (number, string, obj) => {
-    console.log(number, string, obj);
+  socket.on("send-message", (message) => {
+    // Emitting events going down to the client
+    // io.emit("receive-message", message);
+    // Emitting events to all clients except the sender
+    socket.broadcast.emit("receive-message", message);
   });
 });
