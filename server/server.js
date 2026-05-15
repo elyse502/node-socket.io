@@ -1,25 +1,37 @@
-const io = require("socket.io")(3000, {
+const http = require("http");
+const { Server } = require("socket.io");
+const { instrument } = require("@socket.io/admin-ui");
+
+const server = http.createServer();
+
+const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://admin.socket.io"],
+    credentials: true,
   },
 });
 
-io.on("connection", (socket) => {
-  console.log(socket.id);
+instrument(io, {
+  auth: false,
+});
 
-  // Listening to events coming up from the client
+io.on("connection", (socket) => {
+  console.log("connected:", socket.id);
+
   socket.on("send-message", (message, room) => {
-    if (room === "") {
-      // Emitting events to all clients except the sender
+    if (!room) {
       socket.broadcast.emit("receive-message", message);
     } else {
-      // Emitting events to all clients in the room
       socket.to(room).emit("receive-message", message);
     }
   });
 
   socket.on("join-room", (room, cb) => {
     socket.join(room);
-    cb(`User with id ${socket.id} joined room ${room}`);
+    cb(`Joined ${room}`);
   });
+});
+
+server.listen(3000, () => {
+  console.log("Socket.IO server running on 3000");
 });
