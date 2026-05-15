@@ -23,7 +23,7 @@ form.addEventListener("submit", (e) => {
   if (message === "") return;
   displayMessage(message);
   // Emitting events going up to the server
-  socket.emit("send-message", message, room);
+  socket.emit("send-message", message);
 
   messageInput.value = "";
 });

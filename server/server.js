@@ -8,10 +8,13 @@ io.on("connection", (socket) => {
   console.log(socket.id);
 
   // Listening to events coming up from the client
-  socket.on("send-message", (message) => {
-    // Emitting events going down to the client
-    // io.emit("receive-message", message);
-    // Emitting events to all clients except the sender
-    socket.broadcast.emit("receive-message", message);
+  socket.on("send-message", (message, room) => {
+    if (room === "") {
+      // Emitting events to all clients except the sender
+      socket.broadcast.emit("receive-message", message);
+    } else {
+      // Emitting events to all clients in the room
+      socket.to(room).emit("receive-message", message);
+    }
   });
 });
