@@ -49,3 +49,16 @@ function displayMessage(message) {
   div.textContent = message;
   document.getElementById("message-container").append(div);
 }
+
+let count = 0;
+setInterval(() => {
+  socket.emit("ping", ++count);
+  // socket.volatile.emit("ping", ++count);
+}, 1000);
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.matches("input")) return;
+
+  if (e.key === "c") socket.connect();
+  if (e.key === "d") socket.disconnect();
+});

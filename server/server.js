@@ -50,6 +50,8 @@ io.on("connection", (socket) => {
     socket.join(room);
     cb(`Joined ${room}`);
   });
+
+  socket.on("ping", (n) => console.log(n));
 });
 
 server.listen(3000, () => {
