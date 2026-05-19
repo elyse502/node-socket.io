@@ -7,7 +7,13 @@ const form = document.getElementById("form");
 
 const socket = io("http://localhost:3000");
 // Connecting to a different namespace
-const userSocket = io("http://localhost:3000/user");
+const userSocket = io("http://localhost:3000/user", {
+  auth: { token: "Test" },
+});
+
+userSocket.on("connect_error", (error) => {
+  displayMessage(error);
+});
 
 // Listening to events coming down from the server
 socket.on("connect", () => {
