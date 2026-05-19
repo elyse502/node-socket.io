@@ -6,9 +6,6 @@ const roomInput = document.getElementById("room-input");
 const form = document.getElementById("form");
 
 const socket = io("http://localhost:3000");
-// Connecting to a different namespace
-const userSocket = io("http://localhost:3000/user");
-
 // Listening to events coming down from the server
 socket.on("connect", () => {
   displayMessage(`You connected with id: ${socket.id}`);

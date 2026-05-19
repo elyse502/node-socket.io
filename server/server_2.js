@@ -15,13 +15,6 @@ instrument(io, {
   auth: false,
 });
 
-// Creating a different namespace for users
-const userIo = io.of("/user");
-
-userIo.on("connection", (socket) => {
-  console.log("connected to user namespace");
-});
-
 io.on("connection", (socket) => {
   console.log("connected:", socket.id);
 
